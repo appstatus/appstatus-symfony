@@ -1,0 +1,7 @@
+# src/NET/SF/AppStatusBundle/Resources/config/routing.yml
+
+netsf_app_status_homepage:
+    path:     /status
+    defaults: { _controller: NETSFAppStatusBundle:AppStatus:status }
+    requirements:
+        _method:  GET

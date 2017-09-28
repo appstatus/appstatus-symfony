@@ -1,0 +1,124 @@
+{# src/NET/SF/AppStatusBundle/Resources/views/AppStatus/status.html.twig #}
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>APPSTATUS</title>
+        <link href="{{asset('bundles/netsfappstatus/css/bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/netsfappstatus/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/netsfappstatus/css/animate.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/netsfappstatus/css/style.css')}}" rel="stylesheet">
+    </head>
+    <body class="top-navigation">
+        <div id="wrapper">
+            <div id="page-wrapper" class="gray-bg">
+                <div class="row border-bottom white-bg">
+                    <nav class="navbar navbar-static-top" role="navigation">
+                        <div class="navbar-header">
+                            <a href="#" class="navbar-brand">AppStatus</a>
+                        </div>
+                    </nav>
+                </div>
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Status</h5>
+                                </div>
+                                <div class="ibox-content">
+
+                                    <div class="table-responsive">
+                                        <table class="footable table table-stripped toggle-arrow-tiny">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Type</th>
+                                                    <th>Name</th>
+                                                    <th>Description</th>
+                                                    <th>Code</th>
+                                                    <th>Resolution</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% if dataStatus is not empty %}
+                                                    {% for dataStatusKeys,dataStatusValues in dataStatus%}
+                                                        <tr>
+                                                            {% macro dataStatusValuesService(networks, className) %}
+                                                        <ul {% if className %}class="{{ className }}"{% endif %}>
+                                                            {% for network in networks %}
+                                                                <li class="{{ network.name | lower }}"><a href="{{ network.url }}">{{ network.name }}</a></li>
+                                                                {% endfor %}
+                                                        </ul>
+                                                    {% endmacro %}
+
+                                                    <td class="icon"><img {% if dataStatusValues.code == "200" %}src="{{asset('bundles/netsfappstatus/img/status.png')}}" {% else %}src="{{asset('bundles/netsfappstatus/img/red.png')}}" {%endif%} ></td>
+                                                    <td>{{dataStatusValues.groupe}}</td>
+                                                    <td>{{dataStatusValues.name}}</td>
+                                                    <td>{{dataStatusValues.description}}</td>
+                                                    <td>{{dataStatusValues.code}}</td>
+                                                    <td>{{dataStatusValues.code | httpCodeToStringConverter}}</td>
+                                                    </tr>
+                                                {% endfor%}
+                                            {% endif%}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Properties</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="table-responsive">
+                                        <table class="footable table table-stripped toggle-arrow-tiny">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Group</th>
+                                                    <th>Name</th>
+                                                    <th>Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% if dataParameters is not empty %}
+                                                    {% for dataParametersKeys,dataParametersValues in dataParameters%}
+                                                        {% for key,value in dataParametersValues %}
+                                                            <tr>
+                                                                <td class="icon"><img src="{{asset('img/status_files.png')}}"></td>
+                                                                <td>{{dataParametersKeys}}</td>
+                                                                <td>{{ key}}</td>
+                                                                <td>{{ value}}</td>
+                                                            </tr>
+                                                        {%endfor%}
+                                                    {%endfor%}
+                                                {%endif%}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="pull-right">
+                        {#           Mettre la version de l'application ici plus tard     #}
+                    </div>
+                    <div>
+                        <span class="txt-color-white"><strong>Copyright</strong>  &copy; 2017 APPSTATUS </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Mainly scripts -->
+        <script src="{{asset('bundles/netsfappstatus/js/bootstrap.min.js')}}"></script>
+        <!-- Custom and plugin javascript -->
+        <script src="{{asset('bundles/netsfappstatus/js/inspinia.js')}}"></script>
+    </body>
+</html>
